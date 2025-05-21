@@ -118,60 +118,6 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-lg-8">
-        <div class="card mb-4">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold">Sales Over Time</h6>
-            </div>
-            <div class="card-body">
-                <canvas id="salesOverTimeChart" height="300"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="card mb-4">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold">EV Statistics</h6>
-            </div>
-            <div class="card-body">
-                <div class="mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <div class="me-3">
-                            <i class="fas fa-car text-primary fa-2x"></i>
-                        </div>
-                        <div>
-                            <p class="mb-0 small">Average Battery Capacity</p>
-                            <h5 class="mb-0">{{ avg_battery|floatformat:2 }} kWh</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <div class="me-3">
-                            <i class="fas fa-wrench text-success fa-2x"></i>
-                        </div>
-                        <div>
-                            <p class="mb-0 small">Total Services</p>
-                            <h5 class="mb-0">{{ services_count }}</h5>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="d-flex align-items-center mb-2">
-                        <div class="me-3">
-                            <i class="fas fa-shopping-cart text-warning fa-2x"></i>
-                        </div>
-                        <div>
-                            <p class="mb-0 small">Total Sales</p>
-                            <h5 class="mb-0">{{ sales_count }}</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block extra_js %}
@@ -199,42 +145,6 @@
             });
         });
 
-    // Sales Over Time Chart
-    fetch('/api/sales-over-time/')
-        .then(response => response.json())
-        .then(data => {
-            const ctx = document.getElementById('salesOverTimeChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: data,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                            title: {
-                                display: true,
-                                text: 'Sales Value ($)'
-                            }
-                        },
-                        y1: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                            grid: {
-                                drawOnChartArea: false
-                            },
-                            title: {
-                                display: true,
-                                text: 'Number of Sales'
-                            }
-                        }
-                    }
-                }
-            });
-        });
+    
 </script>
 {% endblock %}

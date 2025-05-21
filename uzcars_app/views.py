@@ -7,8 +7,6 @@ from django.http import JsonResponse
 from django_tables2 import SingleTableView, SingleTableMixin
 from django_filters.views import FilterView
 
-from django.db.models import Sum, Count
-from django.db.models.functions import Func
 
 from .models import Car, Owner, ChargingStation, Sale, Service
 from .forms import CarForm, OwnerForm, ChargingStationForm, SaleForm, ServiceForm
@@ -65,39 +63,10 @@ def cars_by_brand_chart_data(request):
     return JsonResponse(data)
 
 # MySQL uchun DATE_FORMAT funksiyasini aniqlash
-class DateFormat(Func):
+class DateFormat():
     function = 'DATE_FORMAT'
     template = "%(function)s(%(expressions)s, '%%b')"
 
-def sales_over_time_chart_data(request):
-    sales_by_month = Sale.objects.annotate(
-        month=DateFormat('sale_date')  # 'sale_date' ni modeldagi sana maydoniga moslashtiring
-    ).values('month').annotate(
-        total=Sum('sale_price'),
-        count=Count('id')
-    ).order_by('month')
-
-    data = {
-        'labels': [item['month'] for item in sales_by_month],
-        'datasets': [
-            {
-                'label': 'Sales Value ($)',
-                'data': [float(item['total']) for item in sales_by_month],
-                'borderColor': '#4c78a8',
-                'backgroundColor': 'rgba(76, 120, 168, 0.2)',
-                'yAxisID': 'y',
-            },
-            {
-                'label': 'Number of Sales',
-                'data': [item['count'] for item in sales_by_month],
-                'borderColor': '#e45756',
-                'backgroundColor': 'rgba(228, 87, 86, 0.2)',
-                'yAxisID': 'y1',
-            }
-        ]
-    }
-
-    return JsonResponse(data)
 
 # Car views
 class CarListView(SingleTableMixin, FilterView):

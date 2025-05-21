@@ -5,7 +5,6 @@ urlpatterns = [
     # Dashboard
     path('', views.dashboard, name='dashboard'),
     path('api/cars-by-brand/', views.cars_by_brand_chart_data, name='cars_by_brand_chart_data'),
-    path('api/sales-over-time/', views.sales_over_time_chart_data, name='sales_over_time_chart_data'),
     
     # Cars
     path('cars/', views.CarListView.as_view(), name='car_list'),
