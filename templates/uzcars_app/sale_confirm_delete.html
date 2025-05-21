@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Sale - UzCars EV{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Delete Sale</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <p>Are you sure you want to delete the sale of "{{ object.car.brand }} {{ object.car.model }}" to "{{ object.owner.first_name }} {{ object.owner.last_name }}"?</p>
+            <button type="submit" class="btn btn-danger">Yes, delete</button>
+            <a href="{% url 'sale_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

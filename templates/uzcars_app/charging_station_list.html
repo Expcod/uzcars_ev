@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load django_tables2 %}
+
+{% block title %}Charging Stations - UzCars EV{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Charging Stations</h1>
+    <a href="{% url 'charging_station_create' %}" class="btn btn-primary">
+        <i class="fas fa-plus me-1"></i> Add New Charging Station
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Filter Charging Stations</h5>
+    </div>
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-4">
+                {{ filter.form.station_name.label_tag }}
+                {{ filter.form.station_name }}
+            </div>
+            <div class="col-md-4">
+                {{ filter.form.location.label_tag }}
+                {{ filter.form.location }}
+            </div>
+            <div class="col-md-4">
+                {{ filter.form.charging_type.label_tag }}
+                {{ filter.form.charging_type }}
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <a href="{% url 'charging_station_list' %}" class="btn btn-secondary">Reset</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            {% render_table table %}
+        </div>
+    </div>
+</div>
+{% endblock %}

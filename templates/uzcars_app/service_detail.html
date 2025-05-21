@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Service Details - UzCars EV{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Service Details</h1>
+    <div>
+        <a href="{% url 'service_update' service.pk %}" class="btn btn-primary">
+            <i class="fas fa-edit me-1"></i> Edit
+        </a>
+        <a href="{% url 'service_delete' service.pk %}" class="btn btn-danger">
+            <i class="fas fa-trash me-1"></i> Delete
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Service Information</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tr>
+                        <th>Car:</th>
+                        <td>{{ service.car.brand }} {{ service.car.model }}</td>
+                    </tr>
+                    <tr>
+                        <th>Service Type:</th>
+                        <td>{{ service.service_type }}</td>
+                    </tr>
+                    <tr>
+                        <th>Service Date:</th>
+                        <td>{{ service.service_date }}</td>
+                    </tr>
+                    <tr>
+                        <th>Service Cost:</th>
+                        <td>${{ service.service_cost|floatformat:2 }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

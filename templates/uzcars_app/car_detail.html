@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ car.brand }} {{ car.model }} - UzCars EV{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">{{ car.brand }} {{ car.model }}</h1>
+    <div>
+        <a href="{% url 'car_update' car.pk %}" class="btn btn-primary">
+            <i class="fas fa-edit me-1"></i> Edit
+        </a>
+        <a href="{% url 'car_delete' car.pk %}" class="btn btn-danger">
+            <i class="fas fa-trash me-1"></i> Delete
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Car Details</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tr>
+                        <th>Brand:</th>
+                        <td>{{ car.brand }}</td>
+                    </tr>
+                    <tr>
+                        <th>Model:</th>
+                        <td>{{ car.model }}</td>
+                    </tr>
+                    <tr>
+                        <th>Year:</th>
+                        <td>{{ car.year }}</td>
+                    </tr>
+                    <tr>
+                        <th>Price:</th>
+                        <td>${{ car.price|floatformat:2 }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tr>
+                        <th>Battery Capacity:</th>
+                        <td>{{ car.battery_capacity }} kWh</td>
+                    </tr>
+                    <tr>
+                        <th>Charging Time:</th>
+                        <td>{{ car.charging_time }} h</td>
+                    </tr>
+                    <tr>
+                        <th>Range:</th>
+                        <td>{{ car.range_km }} km</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if car.sales.all %}
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Sales History</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Owner</th>
+                        <th>Sale Date</th>
+                        <th>Sale Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale in car.sales.all %}
+                    <tr>
+                        <td>{{ sale.owner.first_name }} {{ sale.owner.last_name }}</td>
+                        <td>{{ sale.sale_date }}</td>
+                        <td>${{ sale.sale_price|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if car.services.all %}
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Service History</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Service Type</th>
+                        <th>Service Date</th>
+                        <th>Service Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for service in car.services.all %}
+                    <tr>
+                        <td>{{ service.service_type }}</td>
+                        <td>{{ service.service_date }}</td>
+                        <td>${{ service.service_cost|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Sale Details - UzCars EV{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Sale Details</h1>
+    <div>
+        <a href="{% url 'sale_update' sale.pk %}" class="btn btn-primary">
+            <i class="fas fa-edit me-1"></i> Edit
+        </a>
+        <a href="{% url 'sale_delete' sale.pk %}" class="btn btn-danger">
+            <i class="fas fa-trash me-1"></i> Delete
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Sale Information</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tr>
+                        <th>Car:</th>
+                        <td>{{ sale.car.brand }} {{ sale.car.model }}</td>
+                    </tr>
+                    <tr>
+                        <th>Owner:</th>
+                        <td>{{ sale.owner.first_name }} {{ sale.owner.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Sale Date:</th>
+                        <td>{{ sale.sale_date }}</td>
+                    </tr>
+                    <tr>
+                        <th>Sale Price:</th>
+                        <td>${{ sale.sale_price|floatformat:2 }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

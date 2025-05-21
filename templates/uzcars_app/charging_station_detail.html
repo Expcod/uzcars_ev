@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ charging_station.station_name }} - UzCars EV{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">{{ charging_station.station_name }}</h1>
+    <div>
+        <a href="{% url 'charging_station_update' charging_station.pk %}" class="btn btn-primary">
+            <i class="fas fa-edit me-1"></i> Edit
+        </a>
+        <a href="{% url 'charging_station_delete' charging_station.pk %}" class="btn btn-danger">
+            <i class="fas fa-trash me-1"></i> Delete
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Charging Station Details</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tr>
+                        <th>Station Name:</th>
+                        <td>{{ charging_station.station_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Location:</th>
+                        <td>{{ charging_station.location }}</td>
+                    </tr>
+                    <tr>
+                        <th>Charging Type:</th>
+                        <td>
+                            {% if charging_station.charging_type == 'DC' %}
+                                <span class="badge bg-primary">DC</span>
+                            {% elif charging_station.charging_type == 'AC' %}
+                                <span class="badge bg-success">AC</span>
+                            {% else %}
+                                <span class="badge bg-info">{{ charging_station.charging_type }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Power:</th>
+                        <td>{{ charging_station.power_kw }} kW</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
